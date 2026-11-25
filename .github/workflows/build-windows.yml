@@ -1,0 +1,26 @@
+name: Build Windows (Electron)
+on:
+  push:
+    branches: [main]
+    paths: ['desktop/**', 'pwa/**', '.github/workflows/build-windows.yml']
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+      - name: Gerar instalador .exe
+        run: npm run dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EISENBERG_TRADER-windows-installer
+          path: desktop/dist/EISENBERG_TRADER_Setup_*.exe
+          if-no-files-found: error

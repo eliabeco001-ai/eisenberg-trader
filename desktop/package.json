@@ -1,0 +1,32 @@
+{
+  "name": "eisenberg-trader-desktop",
+  "version": "1.0.0",
+  "description": "EISENBERG TRADER - simulador e análise técnica (modo simulação)",
+  "main": "main.js",
+  "author": "EISENBERG TRADER",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync.js",
+    "start": "npm run sync && electron .",
+    "dist": "npm run sync && electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.eisenberg.trader.desktop",
+    "productName": "EISENBERG TRADER",
+    "directories": { "output": "dist" },
+    "files": ["main.js", "app/**"],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }] },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "artifactName": "EISENBERG_TRADER_Setup_${version}.exe"
+    }
+  }
+}
